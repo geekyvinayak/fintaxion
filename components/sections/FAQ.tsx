@@ -1,0 +1,84 @@
+"use client";
+
+import { useState } from "react";
+import { ArrowRight } from "lucide-react";
+import { Reveal } from "@/components/motion/Reveal";
+import {
+  Accordion,
+  AccordionContent,
+  AccordionItem,
+  AccordionTrigger,
+} from "@/components/ui/accordion";
+import { PartnerChooserDialog } from "@/components/layout/PartnerChooserDialog";
+import { faq } from "@/content/faq";
+
+// Split 10 questions evenly across two columns
+const LEFT_COL = faq.slice(0, 5);
+const RIGHT_COL = faq.slice(5);
+
+// ─── Column ───────────────────────────────────────────────────────────────────
+
+function FaqColumn({ items }: { items: typeof faq }) {
+  return (
+    <Accordion
+      openMultiple={false}
+      className="divide-y divide-ink-100 border-y border-ink-100"
+    >
+      {items.map((item) => (
+        <AccordionItem key={item.id} value={item.id} className="border-none">
+          <AccordionTrigger
+            className={[
+              // Override shadcn defaults
+              "text-display !text-base !font-semibold text-ink-900",
+              "hover:no-underline",
+              "py-5 items-start gap-4",
+            ].join(" ")}
+          >
+            {item.question}
+          </AccordionTrigger>
+          <AccordionContent className="pb-5 text-sm leading-relaxed text-ink-700">
+            {item.answer}
+          </AccordionContent>
+        </AccordionItem>
+      ))}
+    </Accordion>
+  );
+}
+
+// ─── Section ──────────────────────────────────────────────────────────────────
+
+export function FAQ() {
+  const [chooserOpen, setChooserOpen] = useState(false);
+
+  return (
+    <section className="bg-ink-50 py-20 md:py-28" id="faq">
+      <div className="mx-auto max-w-6xl px-6 md:px-8">
+        {/* Header */}
+        <Reveal>
+          <h2 className="text-display max-w-xl text-[clamp(2rem,3vw+1rem,3.5rem)] font-bold leading-tight tracking-tight text-ink-900 text-balance">
+            Frequently asked questions.
+          </h2>
+        </Reveal>
+
+        {/* Two-column accordion */}
+        <div className="mt-12 grid grid-cols-1 gap-x-16 lg:grid-cols-2">
+          <FaqColumn items={LEFT_COL} />
+          <FaqColumn items={RIGHT_COL} />
+        </div>
+
+        {/* Footer nudge */}
+        <div className="mt-12">
+          <button
+            onClick={() => setChooserOpen(true)}
+            className="inline-flex items-center gap-1.5 text-sm font-semibold text-brand-600 transition-colors hover:text-brand-700"
+          >
+            Still have questions? WhatsApp us
+            <ArrowRight className="size-4" />
+          </button>
+        </div>
+      </div>
+
+      <PartnerChooserDialog open={chooserOpen} onOpenChange={setChooserOpen} />
+    </section>
+  );
+}
