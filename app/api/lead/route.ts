@@ -1,7 +1,13 @@
 import { Resend } from "resend";
 import { NextRequest, NextResponse } from "next/server";
 
-const resend = new Resend(process.env.RESEND_API_KEY ?? "");
+// Instantiated lazily inside the handler so module load doesn't throw
+// during build when RESEND_API_KEY is not set in the build environment.
+let _resend: Resend | null = null;
+function getResend(): Resend {
+  if (!_resend) _resend = new Resend(process.env.RESEND_API_KEY);
+  return _resend;
+}
 
 // ─── In-memory rate limit ─────────────────────────────────────────────────────
 // 5 submissions per IP per 15 minutes. Resets on server restart (fine for v1).
@@ -128,7 +134,7 @@ export async function POST(request: NextRequest) {
   const serviceLabel = typeof service === "string" && service ? service : "Not specified";
 
   try {
-    await resend.emails.send({
+    await getResend().emails.send({
       // Note: "from" domain must be verified in Resend dashboard for production.
       // During development, use your Resend test email. In production: noreply@fintaxion.in
       from: "Fintaxion Leads <noreply@fintaxion.in>",

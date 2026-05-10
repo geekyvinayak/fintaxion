@@ -17,11 +17,22 @@ const LEFT_COL = faq.slice(0, 5);
 const RIGHT_COL = faq.slice(5);
 
 // ─── Column ───────────────────────────────────────────────────────────────────
+// Controlled so only one item can be open at a time per column.
 
 function FaqColumn({ items }: { items: typeof faq }) {
+  const [open, setOpen] = useState<string[]>([]);
+
+  function handleChange(next: string[]) {
+    // Find the item that was just opened (not in previous state)
+    const added = next.filter((id) => !open.includes(id));
+    // If a new item was opened, show only that one; otherwise reflect the close
+    setOpen(added.length > 0 ? [added[0]] : next);
+  }
+
   return (
     <Accordion
-      openMultiple={false}
+      value={open}
+      onValueChange={handleChange}
       className="divide-y divide-ink-100 border-y border-ink-100"
     >
       {items.map((item) => (
