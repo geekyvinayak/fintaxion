@@ -1,0 +1,9 @@
+{
+  "permissions": {
+    "allow": [
+      "Bash(node -e \"const p = require\\('./package.json'\\); console.log\\(JSON.stringify\\({motion: p.dependencies['motion'], framer: p.dependencies['framer-motion'], react: p.dependencies['react']}, null, 2\\)\\)\")",
+      "Bash(npx tsc *)",
+      "Bash(awk '{print $NF}')"
+    ]
+  }
+}
