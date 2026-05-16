@@ -26,6 +26,18 @@ const MOBILE_WA_URL = buildWhatsAppUrl(TEAM_NUMBERS.hemant, "Hi, I need help wit
 function ServicesDropdown({ scrolled }: { scrolled: boolean }) {
   const [open, setOpen] = useState(false);
   const ref = useRef<HTMLDivElement>(null);
+  const closeTimer = useRef<ReturnType<typeof setTimeout> | undefined>(undefined);
+
+  function handleMouseEnter() {
+    clearTimeout(closeTimer.current);
+    setOpen(true);
+  }
+
+  function handleMouseLeave() {
+    // Short delay so the mouse can cross the gap between button and panel
+    // without the dropdown closing prematurely.
+    closeTimer.current = setTimeout(() => setOpen(false), 120);
+  }
 
   // Close on outside click
   useEffect(() => {
@@ -35,15 +47,18 @@ function ServicesDropdown({ scrolled }: { scrolled: boolean }) {
       }
     };
     document.addEventListener("mousedown", handler);
-    return () => document.removeEventListener("mousedown", handler);
+    return () => {
+      document.removeEventListener("mousedown", handler);
+      clearTimeout(closeTimer.current);
+    };
   }, []);
 
   return (
     <div
       ref={ref}
       className="relative"
-      onMouseEnter={() => setOpen(true)}
-      onMouseLeave={() => setOpen(false)}
+      onMouseEnter={handleMouseEnter}
+      onMouseLeave={handleMouseLeave}
     >
       <button
         className={cn(
@@ -103,8 +118,8 @@ function ServicesDropdown({ scrolled }: { scrolled: boolean }) {
 
 const navLinks = [
   { label: "Home", href: "/" },
-  { label: "About", href: "/about" },
-  { label: "Team", href: "/team" },
+  { label: "About", href: "/#why-us" },
+  { label: "Team", href: "/#team" },
   { label: "Contact", href: "/contact" },
 ] as const;
 
