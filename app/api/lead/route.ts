@@ -1,5 +1,6 @@
 import { Resend } from "resend";
 import { NextRequest, NextResponse } from "next/server";
+import { escapeHtml } from "@/lib/utils";
 
 // Instantiated lazily inside the handler so module load doesn't throw
 // during build when RESEND_API_KEY is not set in the build environment.
@@ -21,6 +22,12 @@ function isRateLimited(ip: string): boolean {
   const entry = rateLimitMap.get(ip);
 
   if (!entry || now > entry.resetAt) {
+    // Prune expired entries when the map gets large to prevent unbounded growth.
+    if (rateLimitMap.size > 1000) {
+      for (const [k, v] of rateLimitMap) {
+        if (now > v.resetAt) rateLimitMap.delete(k);
+      }
+    }
     rateLimitMap.set(ip, { count: 1, resetAt: now + WINDOW_MS });
     return false;
   }
@@ -69,18 +76,17 @@ function buildEmailHtml(data: {
 </html>`;
 }
 
-function escapeHtml(str: string): string {
-  return str
-    .replace(/&/g, "&amp;")
-    .replace(/</g, "&lt;")
-    .replace(/>/g, "&gt;")
-    .replace(/"/g, "&quot;")
-    .replace(/'/g, "&#039;");
-}
-
 // ─── Route handler ────────────────────────────────────────────────────────────
 
 export async function POST(request: NextRequest) {
+  // Check Resend configured before doing any work
+  if (!process.env.RESEND_API_KEY) {
+    return NextResponse.json(
+      { error: "Email service not configured" },
+      { status: 503 }
+    );
+  }
+
   // Rate limit by IP
   const ip =
     request.headers.get("x-forwarded-for")?.split(",")[0]?.trim() ??
@@ -104,31 +110,14 @@ export async function POST(request: NextRequest) {
 
   const { name, email, phone, service, message } = body;
 
-  // Validate required fields
+  // Validate all required fields in one pass
   if (
-    typeof name !== "string" ||
-    typeof email !== "string" ||
-    typeof phone !== "string" ||
-    typeof message !== "string"
+    typeof name !== "string" || !name.trim() ||
+    typeof email !== "string" || !email.trim() || !email.includes("@") || !email.includes(".") ||
+    typeof phone !== "string" || !phone.trim() ||
+    typeof message !== "string" || !message.trim()
   ) {
-    return NextResponse.json({ error: "Missing required fields" }, { status: 400 });
-  }
-
-  if (!name.trim() || !email.trim() || !phone.trim() || !message.trim()) {
-    return NextResponse.json({ error: "All fields are required" }, { status: 400 });
-  }
-
-  // Basic email format
-  if (!email.includes("@") || !email.includes(".")) {
-    return NextResponse.json({ error: "Invalid email address" }, { status: 400 });
-  }
-
-  // Check Resend configured
-  if (!process.env.RESEND_API_KEY) {
-    return NextResponse.json(
-      { error: "Email service not configured" },
-      { status: 503 }
-    );
+    return NextResponse.json({ error: "Missing or invalid required fields" }, { status: 400 });
   }
 
   const serviceLabel = typeof service === "string" && service ? service : "Not specified";
@@ -136,7 +125,6 @@ export async function POST(request: NextRequest) {
   try {
     await getResend().emails.send({
       // Note: "from" domain must be verified in Resend dashboard for production.
-      // During development, use your Resend test email. In production: noreply@fintaxion.in
       from: "Fintaxion Leads <noreply@fintaxion.in>",
       to: "info@fintaxion.in",
       replyTo: email.trim(),

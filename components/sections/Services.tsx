@@ -1,5 +1,6 @@
 "use client";
 
+import Link from "next/link";
 import { Reveal } from "@/components/motion/Reveal";
 import { Stagger } from "@/components/motion/Stagger";
 import { services, type Service } from "@/content/services";
@@ -43,6 +44,14 @@ function ServiceCard({
         featured && "border-brand-100 bg-brand-50"
       )}
     >
+      {/* Stretched link — makes the whole card clickable */}
+      <Link
+        href={`/services/${service.slug}`}
+        className="absolute inset-0 rounded-2xl focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-brand-500 focus-visible:ring-offset-2"
+        aria-label={`Learn more about ${service.title}`}
+        tabIndex={0}
+      />
+
       {/* Icon */}
       <Icon
         size={28}
@@ -64,12 +73,7 @@ function ServiceCard({
       </h3>
 
       {/* Copy — featured shows full description, others show one-liner */}
-      <p
-        className={cn(
-          "mt-2 leading-relaxed text-ink-500",
-          featured ? "text-sm" : "text-sm"
-        )}
-      >
+      <p className="mt-2 text-sm leading-relaxed text-ink-500">
         {service.oneLiner}
       </p>
       {featured && (
@@ -78,17 +82,24 @@ function ServiceCard({
         </p>
       )}
 
-      {/* WhatsApp link — always at bottom */}
-      <a
-        href={waUrl}
-        target="_blank"
-        rel="noopener noreferrer"
-        className="mt-auto flex items-center gap-1 pt-5 text-sm font-semibold text-brand-600 transition-colors hover:text-brand-700 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-brand-500 focus-visible:ring-offset-1 rounded-sm"
-        aria-label={`WhatsApp us about ${service.title}`}
-      >
-        WhatsApp us
-        <ArrowRight className="size-3.5 transition-transform duration-200 group-hover:translate-x-0.5" />
-      </a>
+      {/* Actions — z-10 so they sit above the stretched link */}
+      <div className="relative z-10 mt-auto flex items-center gap-4 pt-5">
+        <a
+          href={waUrl}
+          target="_blank"
+          rel="noopener noreferrer"
+          className="flex items-center gap-1 text-sm font-semibold text-brand-600 transition-colors hover:text-brand-700 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-brand-500 focus-visible:ring-offset-1 rounded-sm"
+          aria-label={`WhatsApp us about ${service.title}`}
+          onClick={(e) => e.stopPropagation()}
+        >
+          WhatsApp us
+        </a>
+        <span className="text-ink-200" aria-hidden="true">|</span>
+        <span className="flex items-center gap-1 text-sm font-medium text-ink-400 transition-colors group-hover:text-brand-600">
+          Learn more
+          <ArrowRight className="size-3.5 transition-transform duration-200 group-hover:translate-x-0.5" aria-hidden="true" />
+        </span>
+      </div>
     </div>
   );
 }

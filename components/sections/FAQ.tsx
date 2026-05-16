@@ -11,10 +11,11 @@ import {
 } from "@/components/ui/accordion";
 import { PartnerChooserDialog } from "@/components/layout/PartnerChooserDialog";
 import { faq } from "@/content/faq";
+import { cn } from "@/lib/utils";
 
-// Split 10 questions evenly across two columns
-const LEFT_COL = faq.slice(0, 5);
-const RIGHT_COL = faq.slice(5);
+const MID = Math.ceil(faq.length / 2);
+const LEFT_COL = faq.slice(0, MID);
+const RIGHT_COL = faq.slice(MID);
 
 // ─── Column ───────────────────────────────────────────────────────────────────
 // Controlled so only one item can be open at a time per column.
@@ -23,10 +24,9 @@ function FaqColumn({ items }: { items: typeof faq }) {
   const [open, setOpen] = useState<string[]>([]);
 
   function handleChange(next: string[]) {
-    // Find the item that was just opened (not in previous state)
-    const added = next.filter((id) => !open.includes(id));
-    // If a new item was opened, show only that one; otherwise reflect the close
-    setOpen(added.length > 0 ? [added[0]] : next);
+    const openSet = new Set(open);
+    const added = next.find((id) => !openSet.has(id));
+    setOpen(added !== undefined ? [added] : next);
   }
 
   return (
@@ -38,12 +38,10 @@ function FaqColumn({ items }: { items: typeof faq }) {
       {items.map((item) => (
         <AccordionItem key={item.id} value={item.id} className="border-none">
           <AccordionTrigger
-            className={[
-              // Override shadcn defaults
+            className={cn(
               "text-display !text-base !font-semibold text-ink-900",
-              "hover:no-underline",
-              "py-5 items-start gap-4",
-            ].join(" ")}
+              "hover:no-underline py-5 items-start gap-4"
+            )}
           >
             {item.question}
           </AccordionTrigger>

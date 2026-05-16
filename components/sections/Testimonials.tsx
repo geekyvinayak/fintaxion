@@ -39,16 +39,13 @@ function TestimonialCard({
 
 // ─── Single marquee row ───────────────────────────────────────────────────────
 
-// Items are duplicated so the track is always wider than the viewport,
-// making the loop seamless when translateX(-50%) snaps back to 0.
 function MarqueeRow({
-  items,
+  doubled,
   reverse = false,
 }: {
-  items: Testimonial[];
+  doubled: Testimonial[];
   reverse?: boolean;
 }) {
-  const doubled = [...items, ...items];
 
   return (
     <div
@@ -94,10 +91,10 @@ function StaticGrid() {
 
 // ─── Section ──────────────────────────────────────────────────────────────────
 
-// Row 1: first 3 → second 3 → repeat (LTR)
-// Row 2: second 3 → first 3 → repeat (RTL) — different visual order creates variety
-const ROW_1 = testimonials.slice(0, 3).concat(testimonials.slice(3));
-const ROW_2 = testimonials.slice(3).concat(testimonials.slice(0, 3));
+const ROW_1 = testimonials;
+const ROW_2 = [...testimonials.slice(3), ...testimonials.slice(0, 3)];
+const ROW_1_DOUBLED = [...ROW_1, ...ROW_1];
+const ROW_2_DOUBLED = [...ROW_2, ...ROW_2];
 
 export function Testimonials() {
   const prefersReduced = useReducedMotion();
@@ -133,8 +130,8 @@ export function Testimonials() {
       {/* Marquee rows — aria-hidden, visual decoration only */}
       {!prefersReduced && (
         <div className="mt-12 flex flex-col gap-4" aria-hidden="true">
-          <MarqueeRow items={ROW_1} />
-          <MarqueeRow items={ROW_2} reverse />
+          <MarqueeRow doubled={ROW_1_DOUBLED} />
+          <MarqueeRow doubled={ROW_2_DOUBLED} reverse />
         </div>
       )}
     </section>

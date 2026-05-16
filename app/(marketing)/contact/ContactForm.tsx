@@ -7,6 +7,9 @@ import { Input } from "@/components/ui/input";
 import { Textarea } from "@/components/ui/textarea";
 import { services } from "@/content/services";
 import { cn } from "@/lib/utils";
+import { buildWhatsAppUrl, TEAM_NUMBERS } from "@/lib/whatsapp";
+
+const WA_URL = buildWhatsAppUrl(TEAM_NUMBERS.hemant, "Hi, I'd like a free consultation.");
 
 // ─── Native select styled to match shadcn Input ───────────────────────────────
 
@@ -102,6 +105,7 @@ export function ContactForm() {
   const [errors, setErrors] = useState<FormErrors>({});
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [submitted, setSubmitted] = useState(false);
+  const [submittedEmail, setSubmittedEmail] = useState("");
 
   function handleChange(
     e: ChangeEvent<HTMLInputElement | HTMLTextAreaElement | HTMLSelectElement>
@@ -135,6 +139,7 @@ export function ContactForm() {
       if (!res.ok || !data.success) {
         toast.error(data.error ?? "Something went wrong. Please try WhatsApp instead.");
       } else {
+        setSubmittedEmail(values.email);
         setSubmitted(true);
         setValues(EMPTY);
         toast.success("Message sent! We'll reply within 30 minutes.");
@@ -157,7 +162,7 @@ export function ContactForm() {
         <h3 className="text-display text-lg font-semibold text-ink-900">Message received!</h3>
         <p className="text-sm leading-relaxed text-ink-600">
           We typically reply within 30 minutes on WhatsApp and within a few hours by email.
-          You&apos;ll hear from us at <strong>{values.email || "your email"}</strong>.
+          You&apos;ll hear from us at <strong>{submittedEmail}</strong>.
         </p>
         <button
           onClick={() => setSubmitted(false)}
@@ -266,7 +271,7 @@ export function ContactForm() {
       <p className="text-xs text-ink-400">
         Or reach us instantly on{" "}
         <a
-          href="https://wa.me/918178363761?text=Hi%2C%20I%27d%20like%20a%20free%20consultation."
+          href={WA_URL}
           target="_blank"
           rel="noopener noreferrer"
           className="font-medium text-brand-600 underline underline-offset-2 hover:text-brand-700"
