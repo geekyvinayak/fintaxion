@@ -5,16 +5,14 @@ import { Reveal } from "@/components/motion/Reveal";
 import { Stagger } from "@/components/motion/Stagger";
 import { services, type Service } from "@/content/services";
 import { buildWhatsAppUrl, TEAM_NUMBERS } from "@/lib/whatsapp";
+import { WhatsAppIcon } from "@/components/ui/WhatsAppIcon";
 import { cn } from "@/lib/utils";
 import * as LucideIcons from "lucide-react";
-import { ArrowRight, type LucideIcon } from "lucide-react";
+import { ArrowUpRight, type LucideIcon } from "lucide-react";
 
 // ─── Icon resolver ────────────────────────────────────────────────────────────
 
 function getIcon(name: string): LucideIcon {
-  // Double-cast through unknown: lucide's namespace mixes icons + non-icon
-  // exports; Record<string, LucideIcon> doesn't statically overlap, but at
-  // runtime every name from content/services.ts resolves to a valid icon.
   const lookup = LucideIcons as unknown as Record<string, LucideIcon | undefined>;
   return lookup[name] ?? LucideIcons.FileText;
 }
@@ -34,72 +32,60 @@ function ServiceCard({
   return (
     <div
       className={cn(
-        // Base
         "group relative flex h-full flex-col rounded-2xl border p-6 transition-all duration-300",
-        // Hover: -4px lift, soft shadow, brand ring
-        "hover:-translate-y-1 hover:shadow-lg hover:shadow-brand-500/8 hover:ring-1 hover:ring-brand-100",
-        // Default card
+        "hover:-translate-y-1 hover:shadow-lg hover:shadow-brand-500/8",
         !featured && "border-ink-100 bg-white",
-        // Featured card (ITR Filing — 2×2)
         featured && "border-brand-100 bg-brand-50"
       )}
     >
-      {/* Stretched link — makes the whole card clickable */}
+      {/* Stretched link covers the entire card */}
       <Link
         href={`/services/${service.slug}`}
         className="absolute inset-0 rounded-2xl focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-brand-500 focus-visible:ring-offset-2"
-        aria-label={`Learn more about ${service.title}`}
-        tabIndex={0}
+        aria-label={`View ${service.title}`}
       />
 
-      {/* Icon */}
-      <Icon
-        size={28}
-        strokeWidth={1.75}
-        className={cn(
-          "shrink-0 text-brand-600 transition-transform duration-300 ease-out group-hover:rotate-[4deg]",
-          featured && "size-8"
-        )}
-      />
+      {/* Icon row — arrow appears on hover */}
+      <div className="flex items-start justify-between">
+        <Icon
+          size={featured ? 32 : 26}
+          strokeWidth={1.6}
+          className="shrink-0 text-brand-500"
+          aria-hidden="true"
+        />
+        <ArrowUpRight
+          className="size-4 shrink-0 text-ink-300 opacity-0 transition-all duration-200 group-hover:translate-x-0.5 group-hover:-translate-y-0.5 group-hover:text-brand-500 group-hover:opacity-100"
+          aria-hidden="true"
+        />
+      </div>
 
       {/* Title */}
       <h3
         className={cn(
-          "text-display mt-4 font-semibold leading-snug tracking-tight text-ink-900",
-          featured ? "text-xl" : "text-base"
+          "text-display mt-5 font-semibold leading-snug tracking-tight text-ink-900",
+          featured ? "text-xl" : "text-[0.9375rem]"
         )}
       >
         {service.title}
       </h3>
 
-      {/* Copy — featured shows full description, others show one-liner */}
+      {/* One-liner — same for all cards, no long description */}
       <p className="mt-2 text-sm leading-relaxed text-ink-500">
         {service.oneLiner}
       </p>
-      {featured && (
-        <p className="mt-3 text-sm leading-relaxed text-ink-400">
-          {service.description}
-        </p>
-      )}
 
-      {/* Actions — z-10 so they sit above the stretched link */}
-      <div className="relative z-10 mt-auto flex items-center gap-4 pt-5">
-        <a
-          href={waUrl}
-          target="_blank"
-          rel="noopener noreferrer"
-          className="flex items-center gap-1 text-sm font-semibold text-brand-600 transition-colors hover:text-brand-700 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-brand-500 focus-visible:ring-offset-1 rounded-sm"
-          aria-label={`WhatsApp us about ${service.title}`}
-          onClick={(e) => e.stopPropagation()}
-        >
-          WhatsApp us
-        </a>
-        <span className="text-ink-200" aria-hidden="true">|</span>
-        <span className="flex items-center gap-1 text-sm font-medium text-ink-400 transition-colors group-hover:text-brand-600">
-          Learn more
-          <ArrowRight className="size-3.5 transition-transform duration-200 group-hover:translate-x-0.5" aria-hidden="true" />
-        </span>
-      </div>
+      {/* WhatsApp action — always at the bottom, z-10 to stay above stretched link */}
+      <a
+        href={waUrl}
+        target="_blank"
+        rel="noopener noreferrer"
+        className="relative z-10 mt-auto inline-flex items-center gap-1.5 pt-5 text-sm font-semibold text-brand-600 transition-colors hover:text-brand-700 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-brand-500 focus-visible:ring-offset-1 rounded-sm"
+        aria-label={`WhatsApp us about ${service.title}`}
+        onClick={(e) => e.stopPropagation()}
+      >
+        <WhatsAppIcon className="size-3.5" />
+        WhatsApp us
+      </a>
     </div>
   );
 }
@@ -131,10 +117,7 @@ export function Services() {
           {services.map((service, i) => (
             <Stagger.Item
               key={service.slug}
-              className={cn(
-                // First card: 2 cols × 2 rows on desktop
-                i === 0 && "lg:col-span-2 lg:row-span-2"
-              )}
+              className={cn(i === 0 && "lg:col-span-2 lg:row-span-2")}
             >
               <ServiceCard service={service} featured={i === 0} />
             </Stagger.Item>
