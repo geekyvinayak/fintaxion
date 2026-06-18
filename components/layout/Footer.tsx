@@ -16,7 +16,7 @@ const offices = [
 
 const contacts = [
   { label: "Hemant Singh", phone: "+91-8178363761", href: "tel:+918178363761" },
-  { label: "Vijay Pal", phone: "+91-7042067976", href: "tel:+917042067976" },
+  { label: "CMA Vijay Pal", phone: "+91-8796987976", href: "tel:+918796987976" },
 ] as const;
 
 // Minimal inline SVGs for brand social icons (lucide-react excludes brand icons)
@@ -51,7 +51,7 @@ export function Footer() {
                 Fintaxion
               </span>
               <p className="mt-2 text-sm leading-relaxed text-ink-500">
-                Chartered Accountants in Delhi. Compliance made simple — ITR,
+                Professionals in Delhi. Compliance made simple — ITR,
                 GST, ROC, and more.
               </p>
             </div>

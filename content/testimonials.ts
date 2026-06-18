@@ -17,7 +17,7 @@ export const testimonials: Testimonial[] = [
     role: "Senior Software Engineer",
     company: "Infosys, Gurugram",
     quote:
-      "Filed my ITR with capital gains from stocks for the first time — Hemant explained everything clearly and the entire process was done on WhatsApp in less than a day. Got my ₹28,000 refund within three weeks.",
+      "Filed my ITR with capital gains from stocks for the first time — Vijay explained everything clearly and the entire process was done on WhatsApp in less than a day. Got my ₹28,000 refund within three weeks.",
     photo: "/images/testimonials/placeholder.jpg",
   },
   {
@@ -26,7 +26,7 @@ export const testimonials: Testimonial[] = [
     role: "Founder",
     company: "Artisans Collective, Lajpat Nagar",
     quote:
-      "Getting GST registration felt overwhelming until I reached out to Fintaxion. Vijay handled everything — from documentation to following up with the portal — and we were registered in 6 working days.",
+      "Getting GST registration felt overwhelming until I reached out to Fintaxion. Hemant handled everything — from documentation to following up with the portal — and we were registered in 6 working days.",
     photo: "/images/testimonials/placeholder.jpg",
   },
   {
@@ -42,7 +42,7 @@ export const testimonials: Testimonial[] = [
     id: "sneha-agarwal",
     name: "Sneha Agarwal",
     role: "Co-Founder",
-    company: "NutriBox Foods Pvt. Ltd.",
+    company: "NutriBox Foods.",
     quote:
       "Fintaxion handled our entire company incorporation, DPIIT startup recognition, and first-year ROC compliance. It felt like having an in-house CA team without the cost.",
     photo: "/images/testimonials/placeholder.jpg",
@@ -60,7 +60,7 @@ export const testimonials: Testimonial[] = [
     id: "kavitha-nair",
     name: "Kavitha Nair",
     role: "HR Manager",
-    company: "Meridian Exports, Okhla Phase I",
+    company: "Meridian Exports,",
     quote:
       "Our company needed PF and ESI registration urgently for a new batch of employees. Hemant fast-tracked it and also trained our HR team on monthly compliance. Prompt and thorough.",
     photo: "/images/testimonials/placeholder.jpg",

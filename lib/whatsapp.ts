@@ -1,6 +1,6 @@
 export const TEAM_NUMBERS = {
   hemant: "918178363761",
-  vijay: "917042067976",
+  vijay: "918796987976",
 } as const;
 
 /**

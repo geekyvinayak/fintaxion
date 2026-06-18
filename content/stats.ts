@@ -6,22 +6,22 @@ export interface Stat {
 
 export const stats = {
   itrsFiled: {
-    value: 1000,
+    value: 5000,
     label: "ITRs Filed",
     suffix: "+",
   },
   businessesServed: {
-    value: 200,
+    value: 250,
     label: "Businesses Served",
     suffix: "+",
   },
   yearsExperience: {
-    value: 8,
+    value: 5,
     label: "Years of Experience",
     suffix: "+",
   },
   gstReturnsFiled: {
-    value: 5000,
+    value: 1000,
     label: "GST Returns Filed",
     suffix: "+",
   },

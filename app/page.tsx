@@ -18,9 +18,9 @@ const jsonLd = {
       "@id": "https://fintaxion.in/#business",
       name: "Fintaxion Consulting LLP",
       description:
-        "Chartered Accountants in Delhi offering ITR filing, GST registration, TDS returns, ROC compliance, MSME and startup registration.",
+        "Professionals in Delhi offering ITR filing, GST registration, TDS returns, ROC compliance, MSME and startup registration.",
       url: "https://fintaxion.in",
-      telephone: ["+91-8178363761", "+91-7042067976"],
+      telephone: ["+91-8178363761", "+91-8796987976"],
       email: "info@fintaxion.in",
       priceRange: "₹₹",
       address: [

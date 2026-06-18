@@ -12,7 +12,7 @@
 
 **Partners:**
 - Hemant Singh — `+91-8178363761` — WhatsApp: https://wa.me/918178363761
-- Vijay Pal — `+91-7042067976` — WhatsApp: https://wa.me/917042067976
+- CMA Vijay Pal — `+91-8796987976` — WhatsApp: https://wa.me/918796987976
 
 **Email:** info@fintaxion.in
 **Offices:**

@@ -48,7 +48,7 @@ export const services: Service[] = [
     hero: {
       headline: "File your ITR before 31 July — stress-free.",
       subtext:
-        "Our chartered accountants handle ITR-1 through ITR-6 for salaried individuals, freelancers, and businesses. One fixed fee, acknowledgement delivered to your inbox.",
+        "Our Professionals handle ITR-1 through ITR-6 for salaried individuals, freelancers, and businesses. One fixed fee, acknowledgement delivered to your inbox.",
     },
     whoNeedsThis: [
       "Salaried employees receiving Form 16",
@@ -416,7 +416,7 @@ export const services: Service[] = [
     metaDescription:
       "Class 3 DSC issued in 1–2 working days for MCA, GST, e-tendering, and EPFO filing. Doorstep verification available across Delhi NCR. Licensed CA assistance.",
     hero: {
-      headline: "Class 3 Digital Signature Certificate — issued in 1–2 days.",
+      headline: "Class 3 Digital Signature Certificate — issued in 1–2 Hours",
       subtext:
         "A DSC is mandatory for MCA filings, GST e-verification, government tenders, and EPFO. We arrange Class 3 DSCs with doorstep verification across Delhi NCR.",
     },
@@ -463,7 +463,7 @@ export const services: Service[] = [
       from: 1499,
       note: "Class 3 individual DSC with 2-year validity. Organisation DSC and renewal pricing available on request.",
     },
-    timeline: "1–2 working days after successful identity verification",
+    timeline: "1–2 Hours after successful identity verification",
     faq: [
       {
         q: "What is a Digital Signature Certificate and why do I need one?",

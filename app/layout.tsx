@@ -36,7 +36,7 @@ export const metadata: Metadata = {
     template: "%s | Fintaxion Consulting",
   },
   description:
-    "Chartered Accountants in Delhi. ITR filing, GST registration, TDS returns, ROC compliance, MSME & startup registration — handled on WhatsApp. First consultation free.",
+    "Professionals in Delhi. ITR filing, GST registration, TDS returns, ROC compliance, MSME & startup registration — handled on WhatsApp. First consultation free.",
   keywords: [
     "CA firm Delhi",
     "chartered accountant Delhi",

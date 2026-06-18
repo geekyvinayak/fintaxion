@@ -11,8 +11,8 @@ const REASONS: {
 }[] = [
   {
     icon: BadgeCheck,
-    title: "Licensed Chartered Accountants",
-    body: "Every filing is handled by a qualified CA — not an intern or a bot. You get professional accountability with every engagement.",
+    title: "Licensed Professionals Accountants",
+    body: "Every filing is handled by a qualified Person — not an intern or a bot. You get professional accountability with every engagement.",
   },
   {
     icon: Receipt,

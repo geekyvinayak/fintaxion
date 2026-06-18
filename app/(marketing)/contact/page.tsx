@@ -25,7 +25,7 @@ const OFFICES = [
 
 const PARTNERS = [
   { name: "Hemant Singh", phone: "+91-8178363761", tel: "tel:+91-8178363761" },
-  { name: "Vijay Pal", phone: "+91-7042067976", tel: "tel:+91-7042067976" },
+  { name: "CMA Vijay Pal", phone: "+91-8796987976", tel: "tel:+91-8796987976" },
 ];
 
 // ─── Page ─────────────────────────────────────────────────────────────────────

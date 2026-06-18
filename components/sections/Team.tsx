@@ -100,7 +100,7 @@ export function Team() {
               The partners behind Fintaxion.
             </h2>
             <p className="mt-4 text-lg leading-relaxed text-ink-500">
-              Qualified CAs with a combined 15+ years of practice across direct
+              Qualified Professionals with a combined 11+ years of practice across direct
               and indirect taxation.
             </p>
           </div>

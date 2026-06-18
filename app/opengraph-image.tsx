@@ -106,7 +106,7 @@ export default async function OGImage() {
               margin: "0 0 16px",
             }}
           >
-            Chartered Accountants · Delhi
+            Professionals · Delhi
           </p>
           <h1
             style={{

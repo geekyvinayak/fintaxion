@@ -15,10 +15,10 @@ const WORD_INTERVAL_MS = 2600;
 
 /** Stats rendered inside the right decorative panel */
 const PANEL_STATS = [
-  { value: "1,000+", label: "ITRs Filed" },
-  { value: "200+", label: "Businesses Served" },
-  { value: "8+", label: "Years of Experience" },
-  { value: "5,000+", label: "GST Returns Filed" },
+  { value: "5,000+", label: "ITRs Filed" },
+  { value: "250+", label: "Businesses Served" },
+  { value: "5+", label: "Years of Experience" },
+  { value: "1,000+", label: "GST Returns Filed" },
 ] as const;
 
 // ─── Deadline info strip ──────────────────────────────────────────────────────
@@ -162,7 +162,7 @@ export function Hero() {
               className="max-w-[42ch] text-lg leading-relaxed text-ink-500"
               variants={itemVariants}
             >
-              Licensed CAs in Delhi handling 1,000+ filings every year. Talk to
+              Licensed Professionals in Delhi handling 2,000+ filings every year. Talk to
               us on WhatsApp — first consultation is free.
             </motion.p>
 
